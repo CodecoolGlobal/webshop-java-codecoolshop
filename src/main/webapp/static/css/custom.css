@@ -60,3 +60,32 @@
 {
     margin: 0 0 11px;
 }
+h1 {
+    margin-top: 5%;
+}
+.crop {
+    overflow: hidden;
+    text-align: center;
+}
+.crop img {
+    alignment: center;
+    height: 300px;
+    /*margin: -75px 0 0 -100px;*/
+}
+.animal-description {
+    height: 200px;
+    overflow-y: auto;
+}
+.animal-description::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+.animal-name {
+    overflow: hidden;
+    height: 2.5em;
+    overflow-y: auto;
+}
+.animal-name::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
