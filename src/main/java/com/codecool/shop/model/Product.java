@@ -6,14 +6,14 @@ import java.util.Currency;
 
 public class Product extends BaseModel {
 
-    private int defaultPrice;
+    private float defaultPrice;
     private Currency defaultCurrency;
     private ProductCategory productCategory;
     private Supplier supplier;
     private String imgLink;
 
 
-    public Product(String name, ProductCategory productCategory, int defaultPrice, String currencyString, String description, String imgLink) {
+    public Product(String name, ProductCategory productCategory, float defaultPrice, String currencyString, String description, String imgLink) {
         super(name, description);
         this.productCategory = productCategory;
         this.defaultPrice = defaultPrice;
@@ -29,11 +29,11 @@ public class Product extends BaseModel {
         imgLink = data[5];
     }
 
-    public int getDefaultPrice() {
+    public float getDefaultPrice() {
         return defaultPrice;
     }
 
-    public void setDefaultPrice(int defaultPrice) {
+    public void setDefaultPrice(float defaultPrice) {
         this.defaultPrice = defaultPrice;
     }
 
@@ -49,7 +49,7 @@ public class Product extends BaseModel {
         return String.valueOf(this.defaultPrice) + " " + this.defaultCurrency.toString();
     }
 
-    public void setPrice(int price, String currency) {
+    public void setPrice(float price, String currency) {
         this.defaultPrice = price;
         this.defaultCurrency = Currency.getInstance(currency);
     }
