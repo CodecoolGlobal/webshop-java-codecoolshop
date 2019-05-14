@@ -54,4 +54,7 @@ public class Order {
         return products;
     }
 
+    public float getSumOfPriceBy(Product product) {
+        return products.get(product) * product.getDefaultPrice();
+    }
 }
