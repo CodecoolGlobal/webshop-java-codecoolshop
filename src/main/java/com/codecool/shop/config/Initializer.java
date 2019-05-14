@@ -41,5 +41,17 @@ public class Initializer implements ServletContextListener {
 
         //setting up new order
         Order order = new Order();
+
+        //testing the order methods
+        Product product_eins = new Product("Something", 20f, "USD", "nope", tablet, amazon);
+        Product product_zwei = new Product("Something else", 25f, "USD", "nope and nope", tablet, lenovo);
+
+        order.add(product_eins);
+        order.add(product_eins);
+        order.add(product_zwei);
+        order.reduce(product_eins);
+        order.reduce(product_eins);
+        order.reduce(product_eins);
+
     }
 }
