@@ -33,7 +33,7 @@ public class ProductController extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
 //        context.setVariable("allCategories", productCategoryDataStore.find(4));
 //        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(4)));
-        context.setVariable("categories", productCategoryDataStore);
+        context.setVariable("categories", productCategoryDataStore.getAll());
         context.setVariable("products", productDataStore);
         engine.process("product/index.html", context, resp.getWriter());
     }

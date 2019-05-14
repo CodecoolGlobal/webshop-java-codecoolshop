@@ -34,7 +34,7 @@
     <h1>Codecool Shop</h1>
 </div>
 
-<div class="container" th:each="category,iterStat : ${categories.getAll()}">
+<div class="container" th:each="category,iterStat : ${categories}">
     <h1 th:text="${category.name + 's'}">Category Title</h1>
 
     <div id="products" class="row">
