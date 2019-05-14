@@ -39,30 +39,36 @@
         <strong>Products</strong>
     </div>
 
-    <div class="btn-group">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Product Category
-        </button>
-        <div class="dropdown-menu">
-            <div th:each="category,iterStat : ${categories}">
-                <a class="dropdown-item" href="#" th:text="${category.getName()}">Product category</a>
-            </div>
-        </div>
-    </div>
+<!--    <form name='add' method="post">-->
+<!--        Age: <select name='age'>-->
+<!--        <option value='1_sre' >23</option>-->
+<!--        <option value='2_sam'>24</option>-->
+<!--        <option value='5_john'>25</option>-->
+<!--    </select>-->
+<!--        <input type='submit' name='submit'/>-->
+<!--    </form>-->
 
-    <div class="btn-group">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Supplier
-        </button>
-        <div class="dropdown-menu">
-            <div th:each="supplier,iterStat : ${suppliers}">
-                <a class="dropdown-item" href="#" th:text="${supplier.getName()}">Supplier</a>
-            </div>
+
+    <form name="category" method="post">
+        <div class="btn-group">
+            <select class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
+                <option selected>Product Category</option>
+                <div th:each="category,iterStat : ${categories}">
+                    <option th:value="${category.getName()}" th:text="${category.getName()}">Product Category</option>
+                </div>
+            </select>
+            <select class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
+                <option selected>Supplier</option>
+                <div th:each="supplier,iterStat : ${suppliers}">
+                    <option th:value="${supplier.getName()}" th:text="${supplier.getName()}">Supplier</option>
+                </div>
+            </select>
         </div>
-    </div>
+    </form>
+
 
     <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
+        <div class="col col-sm-12 col-md-6 col-lg-4 mb-3" th:each="prod,iterStat : ${products}">
             <div class="card">
                 <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="card-header">
