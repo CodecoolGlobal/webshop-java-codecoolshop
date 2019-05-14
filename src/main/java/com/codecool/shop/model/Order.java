@@ -33,10 +33,12 @@ public class Order {
     }
 
     public void reduce(Product product){
-        if(products.get(product) == 1){
-            products.remove(product);
-        }else{
-            products.put(product, products.get(product) - 1);
+        if (products.get(product) != null) {
+            if(products.get(product) == 1){
+                products.remove(product);
+            }else{
+                products.put(product, products.get(product) - 1);
+            }
         }
     }
 
