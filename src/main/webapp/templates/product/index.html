@@ -39,6 +39,28 @@
         <strong>Products</strong>
     </div>
 
+    <div class="btn-group">
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Product Category
+        </button>
+        <div class="dropdown-menu">
+            <div th:each="category,iterStat : ${categories}">
+                <a class="dropdown-item" href="#" th:text="${category.getName()}">Product category</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Supplier
+        </button>
+        <div class="dropdown-menu">
+            <div th:each="supplier,iterStat : ${suppliers}">
+                <a class="dropdown-item" href="#" th:text="${supplier.getName()}">Supplier</a>
+            </div>
+        </div>
+    </div>
+
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="card">
