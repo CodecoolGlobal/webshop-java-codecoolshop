@@ -1,27 +1,39 @@
 package com.codecool.shop.model;
 
+import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+
 import java.util.Currency;
 
 public class Product extends BaseModel {
 
-    private float defaultPrice;
+    private int defaultPrice;
     private Currency defaultCurrency;
     private ProductCategory productCategory;
     private Supplier supplier;
+    private String imgLink;
 
 
-    public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
+    public Product(String name, ProductCategory productCategory, int defaultPrice, String currencyString, String description, String imgLink) {
         super(name, description);
-        this.setPrice(defaultPrice, currencyString);
-        this.setSupplier(supplier);
-        this.setProductCategory(productCategory);
+        this.productCategory = productCategory;
+        this.defaultPrice = defaultPrice;
+        this.defaultCurrency = Currency.getInstance(currencyString);
+        this.imgLink = imgLink;
     }
 
-    public float getDefaultPrice() {
+    public Product(String[] data) {
+        super(data[0], data[4]);
+        productCategory = ProductCategoryDaoMem.getInstance().find(data[1]);
+        defaultPrice = Integer.valueOf(data[2]);
+        defaultCurrency = Currency.getInstance(data[3]);
+        imgLink = data[5];
+    }
+
+    public int getDefaultPrice() {
         return defaultPrice;
     }
 
-    public void setDefaultPrice(float defaultPrice) {
+    public void setDefaultPrice(int defaultPrice) {
         this.defaultPrice = defaultPrice;
     }
 
@@ -37,7 +49,7 @@ public class Product extends BaseModel {
         return String.valueOf(this.defaultPrice) + " " + this.defaultCurrency.toString();
     }
 
-    public void setPrice(float price, String currency) {
+    public void setPrice(int price, String currency) {
         this.defaultPrice = price;
         this.defaultCurrency = Currency.getInstance(currency);
     }
@@ -74,5 +86,9 @@ public class Product extends BaseModel {
                 this.defaultCurrency.toString(),
                 this.productCategory.getName(),
                 this.supplier.getName());
+    }
+
+    public String getImgLink() {
+        return imgLink;
     }
 }
