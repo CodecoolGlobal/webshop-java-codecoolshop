@@ -9,6 +9,7 @@ public class Order {
     private static int instanceCounter;
     private int id;
     private float sumOfPrice;
+    private int sumOfProducts;
     HashMap<Product, Integer> products;
 
     public Order(){
@@ -17,6 +18,7 @@ public class Order {
     }
 
     public float getSumOfPrice(){
+        sumOfPrice = 0;
         for (Map.Entry<Product, Integer> product : products.entrySet()){
             sumOfPrice += product.getKey().getDefaultPrice() * product.getValue();
         }
@@ -36,6 +38,14 @@ public class Order {
         }else{
             products.put(product, products.get(product) - 1);
         }
+    }
+
+    public int getNumberOfProducts(){
+        sumOfProducts = 0;
+        for(int value : products.values()){
+            sumOfProducts += value;
+        }
+        return sumOfProducts;
     }
 
     public HashMap<Product, Integer> getProductsOfOrder(){
