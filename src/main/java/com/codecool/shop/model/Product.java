@@ -59,9 +59,7 @@ public class Product extends BaseModel {
         this.supplier = supplier;
         this.supplier.addProduct(this);
     }
-    public String getName(){
-        return name;
-    }
+
 
     @Override
     public String toString() {
