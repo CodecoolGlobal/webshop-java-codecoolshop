@@ -64,8 +64,12 @@ h1 {
     margin-top: 5%;
 }
 .crop {
-    overflow: hidden;
+    overflow: auto;
     text-align: center;
+}
+.crop::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
 }
 .crop img {
     alignment: center;
