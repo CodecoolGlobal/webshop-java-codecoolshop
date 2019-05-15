@@ -58,6 +58,9 @@
     <div>
         <p th:text="'Sum of price:' + ${cart.getInstance().getPriceSum()}"> Sum Of Price</p>
     </div>
+    <div>
+        <a href="/"><button>Back to shop</button></a>
+    </div>
 </div>
 
 <div th:replace="footer.html :: copy"></div>
