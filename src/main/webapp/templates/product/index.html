@@ -37,29 +37,47 @@
 <div class="container" th:each="category,iterStat : ${categories}">
     <h1 th:text="${category.name + 's'}">Category Title</h1>
 
+<form method="post" action="/">
+    <div class="btn-group">
+        <select name="category" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
+            <option selected>Product Category</option>
+            <div th:each="category,iterStat : ${categories}">
+                <option th:value="${category.getId()}" th:text="${category.getName()}">Product Category</option>
+            </div>
+        </select>
+        <select name="supplier" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
+            <option selected>Supplier</option>
+            <div th:each="supplier,iterStat : ${suppliers}">
+                <option th:value="${supplier.getId()}" th:text="${supplier.getName()}">Supplier</option>
+            </div>
+        </select>
+        <button class="btn btn-info mb-3" type="submit">Filter</button>
+    </div>
+</form>
+
+<div>
     <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products.getBy(category)}">
+        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="card" style="margin-top: 10%">
                 <div class="crop">
                     <img src="http://placehold.it/400x250/000/fff" class="card-title" th:attr="src=${prod.imgLink}">
                 </div>
-                <div class="card-header">
-                    <h4 class="card-title animal-name" th:text="${prod.name}">Product name</h4>
-                    <p class="card-text animal-description" th:text="${prod.description}">Product description... </p>
+            </div>
+            <div class="card-header">
+                <h4 class="card-title animal-name" th:text="${prod.name}">Product name</h4>
+                <p class="card-text animal-description" th:text="${prod.description}">Product description... </p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                 </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
-                    </div>
-                    <div class="card-text">
-                        <a class="btn btn-success" th:href="@{~/(id=${prod.getId()})}">Add to cart</a>
-                    </div>
+                <div class="card-text">
+                    <a class="btn btn-success" th:href="@{~/(id=${prod.getId()})}"></a>
                 </div>
             </div>
         </div>
-        <a href="/shopping-cart">Shopping Cart</a>
     </div>
-
+</div>
 </div>
 
 <div th:replace="footer.html :: copy"></div>
