@@ -1,6 +1,7 @@
 package com.codecool.shop.model;
 
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
 
 import java.util.Currency;
 
@@ -27,6 +28,7 @@ public class Product extends BaseModel {
         defaultPrice = Integer.valueOf(data[2]);
         defaultCurrency = Currency.getInstance(data[3]);
         imgLink = data[5];
+        supplier = SupplierDaoMem.getInstance().next();
     }
 
     public float getDefaultPrice() {
@@ -71,6 +73,7 @@ public class Product extends BaseModel {
         this.supplier = supplier;
         this.supplier.addProduct(this);
     }
+
 
     @Override
     public String toString() {
