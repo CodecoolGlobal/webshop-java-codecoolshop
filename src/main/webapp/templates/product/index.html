@@ -36,7 +36,7 @@
 
 <div class="container">
     <div class="card">
-        <strong>Products</strong>
+        <strong th:text="${category.getName()}">Products</strong>
     </div>
 
 <!--    <form name='add' method="post">-->
@@ -49,23 +49,23 @@
 <!--    </form>-->
 
 
-    <form name="category" method="post">
+    <form method="post" action="/">
         <div class="btn-group">
-            <select class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
+            <select name="category" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
                 <option selected>Product Category</option>
                 <div th:each="category,iterStat : ${categories}">
-                    <option th:value="${category.getName()}" th:text="${category.getName()}">Product Category</option>
+                    <option th:value="${category.getId()}" th:text="${category.getName()}">Product Category</option>
                 </div>
             </select>
-            <select class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
+            <select name="supplier" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
                 <option selected>Supplier</option>
                 <div th:each="supplier,iterStat : ${suppliers}">
-                    <option th:value="${supplier.getName()}" th:text="${supplier.getName()}">Supplier</option>
+                    <option th:value="${supplier.getId()}" th:text="${supplier.getName()}">Supplier</option>
                 </div>
             </select>
+            <button class="btn btn-info mb-3" type="submit">Filter</button>
         </div>
     </form>
-
 
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4 mb-3" th:each="prod,iterStat : ${products}">
