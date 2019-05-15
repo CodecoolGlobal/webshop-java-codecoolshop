@@ -7,14 +7,23 @@ import java.util.Map;
 public class Order {
 
     private static int instanceCounter;
+    private static Order instance = null;
+
     private int id;
     private float sumOfPrice;
     private int sumOfProducts;
-    HashMap<Product, Integer> products;
+    private Map<Product, Integer> products;
 
-    public Order(){
-        this.id = instanceCounter++;
+    private Order(){
+        this.id = ++instanceCounter;
         products = new HashMap<>();
+    }
+
+    public static Order getInstance() {
+        if (instance == null) {
+            instance = new Order();
+        }
+        return instance;
     }
 
     public float getSumOfPrice(){
@@ -25,11 +34,7 @@ public class Order {
         return sumOfPrice;
     }
     public void add(Product product){
-        if(products.get(product) != null){
-            products.put(product, products.get(product) + 1);
-        }else{
-            products.put(product, 1);
-        }
+        products.merge(product, 1, Integer::sum);
     }
 
     public void reduce(Product product){
@@ -50,7 +55,7 @@ public class Order {
         return sumOfProducts;
     }
 
-    public HashMap<Product, Integer> getProductsOfOrder(){
+    public Map<Product, Integer> getProductsOfOrder(){
         return products;
     }
 
@@ -59,5 +64,14 @@ public class Order {
             return products.get(product) * product.getDefaultPrice();
         }
         return 0f;
+    }
+
+    public void complete() {
+        saveOrderToFile();
+        instance = new Order();
+    }
+
+    private void saveOrderToFile() {
+
     }
 }
