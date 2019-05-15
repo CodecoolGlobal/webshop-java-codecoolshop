@@ -49,9 +49,14 @@ public class Initializer implements ServletContextListener {
         order.add(product_eins);
         order.add(product_eins);
         order.add(product_zwei);
+
         order.reduce(product_eins);
         order.reduce(product_eins);
         order.reduce(product_eins);
 
+        System.out.println("Num of Products " + order.getNumberOfProducts());
+        System.out.println("Sum of price " + order.getSumOfPrice());
+        System.out.println("Sum of price of product_zwei " + order.getSumOfPriceBy(product_zwei));
+        System.out.println("Sum of price of product_eins" + order.getSumOfPriceBy(product_eins));
     }
 }
