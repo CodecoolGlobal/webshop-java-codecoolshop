@@ -39,24 +39,6 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
 
-        //setting up new order
-        Order order = new Order();
 
-        //testing the order methods
-        Product product_eins = new Product("Something", 20f, "USD", "nope", tablet, amazon);
-        Product product_zwei = new Product("Something else", 25f, "USD", "nope and nope", tablet, lenovo);
-
-        order.add(product_eins);
-        order.add(product_eins);
-        order.add(product_zwei);
-
-        order.reduce(product_eins);
-        order.reduce(product_eins);
-        order.reduce(product_eins);
-
-        System.out.println("Num of Products " + order.getNumberOfProducts());
-        System.out.println("Sum of price " + order.getSumOfPrice());
-        System.out.println("Sum of price of product_zwei " + order.getSumOfPriceBy(product_zwei));
-        System.out.println("Sum of price of product_eins" + order.getSumOfPriceBy(product_eins));
     }
 }
