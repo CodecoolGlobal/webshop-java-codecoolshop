@@ -10,8 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,8 +25,10 @@ public class Order {
     private static final String FOLDER_PATH = System.getProperty("user.dir") + "/orders/";
 
     private int id;
-    private float sumOfPrice;
+    private float priceSum;
     private int sumOfProducts;
+    private boolean confirmed;
+    private boolean paid;
     private Map<Product, Integer> products;
 
     private Order(){
@@ -43,13 +43,6 @@ public class Order {
         return instance;
     }
 
-    public float getSumOfPrice(){
-        sumOfPrice = 0;
-        for (Map.Entry<Product, Integer> product : products.entrySet()){
-            sumOfPrice += product.getKey().getDefaultPrice() * product.getValue();
-        }
-        return sumOfPrice;
-    }
     public void add(Product product){
         products.merge(product, 1, Integer::sum);
     }
@@ -64,12 +57,32 @@ public class Order {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public float getPriceSum(){
+        priceSum = 0;
+        for (Map.Entry<Product, Integer> product : products.entrySet()){
+            priceSum += product.getKey().getDefaultPrice() * product.getValue();
+        }
+        return priceSum;
+    }
+
     public int getNumberOfProducts(){
         sumOfProducts = 0;
         for(int value : products.values()){
             sumOfProducts += value;
         }
         return sumOfProducts;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public boolean isPaid() {
+        return paid;
     }
 
     public Map<Product, Integer> getProductsOfOrder(){
@@ -84,6 +97,8 @@ public class Order {
     }
 
     public void complete() {
+        confirmed = true;
+        paid = true;
         saveOrderToFile();
         instance = new Order();
     }
@@ -100,12 +115,12 @@ public class Order {
     }
 
     public static void main(String[] args) {
-        Order order = Order.getInstance();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-        productDataStore.getAll().forEach(order::add);
-        productDataStore.getAll().forEach(order::add);
-        order.complete();
+        Order currentOrder = Order.getInstance();
+
+        productDataStore.getAll().forEach(currentOrder::add);
+        currentOrder.complete();
     }
 }
