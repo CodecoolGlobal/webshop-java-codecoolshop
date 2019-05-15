@@ -6,7 +6,7 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
-//import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -99,20 +99,20 @@ public class Order {
     public void complete() {
         confirmed = true;
         paid = true;
-//        saveOrderToFile();
+        saveOrderToFile();
         instance = new Order();
     }
 
-//    private void saveOrderToFile() {
-//        ObjectMapper mapper = new ObjectMapper();
-//        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
-//
-//        try {
-//            mapper.writeValue(new File(FOLDER_PATH + id + "_" + dateFormat.format(new Date()) + ".json"), instance);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void saveOrderToFile() {
+        ObjectMapper mapper = new ObjectMapper();
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+
+        try {
+            mapper.writeValue(new File(FOLDER_PATH + id + "_" + dateFormat.format(new Date()) + ".json"), instance);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         ProductDao productDataStore = ProductDaoMem.getInstance();

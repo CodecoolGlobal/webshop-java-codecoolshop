@@ -29,21 +29,10 @@ public class ShoppingCartController extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
-        Order order = new Order();
-
-        //testing the order methods
-        Product product_eins = new Product("Something", 20f, "USD", "nope", productCategoryDataStore.find(1), supplierDataStore.find(1));
-        Product product_zwei = new Product("Something else", 25f, "USD", "nope and nope", productCategoryDataStore.find(1), supplierDataStore.find(1));
-
-        order.add(product_eins);
-        order.add(product_eins);
-        order.add(product_zwei);
-
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("", productCategoryDataStore.find(1));
-        context.setVariable("cart", order);
+        context.setVariable("cart", Order.getInstance());
         engine.process("cart/cart.html", context, resp.getWriter());
     }
 
