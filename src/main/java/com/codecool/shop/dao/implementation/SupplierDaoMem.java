@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class SupplierDaoMem implements SupplierDao {
 
-    private static final Path PATH = Paths.get("/home/benjamin/Documents/Codecool/oop/4tw/webshop/src/data/suppliers.csv");
+    private static final Path PATH = Paths.get(System.getProperty("user.dir"),"/src/data/suppliers.csv");
 
     private int current;
     private List<Supplier> data = new ArrayList<>();

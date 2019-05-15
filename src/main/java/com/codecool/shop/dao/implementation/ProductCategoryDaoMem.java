@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductCategoryDaoMem implements ProductCategoryDao {
-    private static final Path PATH = Paths.get("/home/benjamin/Documents/Codecool/oop/4tw/webshop/src/data/categories.csv");
+    private static final Path PATH = Paths.get(System.getProperty("user.dir"),"/src/data/categories.csv");
 
 
     private List<ProductCategory> data = new ArrayList<>();

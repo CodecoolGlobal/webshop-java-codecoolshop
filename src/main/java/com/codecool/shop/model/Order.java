@@ -1,5 +1,20 @@
 package com.codecool.shop.model;
 
+import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +23,8 @@ public class Order {
 
     private static int instanceCounter;
     private static Order instance = null;
+
+    private static final String FOLDER_PATH = System.getProperty("user.dir") + "/orders/";
 
     private int id;
     private float sumOfPrice;
@@ -72,6 +89,23 @@ public class Order {
     }
 
     private void saveOrderToFile() {
+        ObjectMapper mapper = new ObjectMapper();
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
 
+        try {
+            mapper.writeValue(new File(FOLDER_PATH + id + "_" + dateFormat.format(new Date()) + ".json"), instance);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        Order order = Order.getInstance();
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+        productDataStore.getAll().forEach(order::add);
+        productDataStore.getAll().forEach(order::add);
+        order.complete();
     }
 }

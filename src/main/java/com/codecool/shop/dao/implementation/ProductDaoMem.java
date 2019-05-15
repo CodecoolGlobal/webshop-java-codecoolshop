@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductDaoMem implements ProductDao {
-    private static final Path PATH = Paths.get("/home/benjamin/Documents/Codecool/oop/4tw/webshop/src/data/animals.csv");
+    private static final Path PATH = Paths.get(System.getProperty("user.dir"),"/src/data/animals.csv");
 
     private List<Product> data = new ArrayList<>();
     private static ProductDaoMem instance = null;
