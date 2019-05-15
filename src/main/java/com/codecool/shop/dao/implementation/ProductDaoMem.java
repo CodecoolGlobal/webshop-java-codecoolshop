@@ -6,11 +6,17 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductDaoMem implements ProductDao {
+    private static final Path PATH = Paths.get(System.getProperty("user.dir"),"/src/data/animals.csv");
 
     private List<Product> data = new ArrayList<>();
     private static ProductDaoMem instance = null;
@@ -18,6 +24,12 @@ public class ProductDaoMem implements ProductDao {
     /* A private Constructor prevents any other class from instantiating.
      */
     private ProductDaoMem() {
+        try {
+            Files.lines(PATH).forEach(line -> add(new Product(line.strip().split("\\|"))));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("No such file or something is wrong with the file... go figure");
+        }
     }
 
     public static ProductDaoMem getInstance() {

@@ -30,14 +30,10 @@ public class ProductController extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
 
-//        Map params = new HashMap<>();
-//        params.put("category", productCategoryDataStore.find(1));
-//        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        ProductCategory category = null;
+        ProductCategory category;
 
         String categoryId = (req.getParameter("category") != null) ? req.getParameter("category") : "";
         try {
@@ -46,17 +42,16 @@ public class ProductController extends HttpServlet {
             category = new ProductCategory("Products", "Default", "Default description");
         }
 
-        Supplier supplier = null;
+        Supplier supplier;
 
         String supplierId = (req.getParameter("supplier") != null) ? req.getParameter("supplier") : "";
         try {
             supplier = supplierDao.find(Integer.parseInt(supplierId));
         } catch (NumberFormatException e) {
-            supplier = new Supplier("Default supplier", "Default description");
+            supplier = new Supplier("Default supplier", "Default state", "Default city", "Default description");
         }
 
         context.setVariable("category", category);
-//        context.setVariable("supplier", supplier);
         context.setVariable("categories", productCategoryDataStore.getAll());
         context.setVariable("suppliers", supplierDao.getAll());
 

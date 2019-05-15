@@ -35,58 +35,51 @@
 </div>
 
 <div class="container">
-    <div class="card">
-        <strong th:text="${category.getName()}">Products</strong>
+
+<form method="post" action="/">
+    <div class="btn-group">
+        <select name="category" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
+            <option selected>Product Category</option>
+            <div th:each="category,iterStat : ${categories}">
+                <option th:value="${category.getId()}" th:text="${category.getName()}">Product Category</option>
+            </div>
+        </select>
+        <select name="supplier" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
+            <option selected>Supplier</option>
+            <div th:each="supplier,iterStat : ${suppliers}">
+                <option th:value="${supplier.getId()}" th:text="${supplier.getName()}">Supplier</option>
+            </div>
+        </select>
+        <button class="btn btn-info mb-3" type="submit">Filter</button>
     </div>
+</form>
 
-<!--    <form name='add' method="post">-->
-<!--        Age: <select name='age'>-->
-<!--        <option value='1_sre' >23</option>-->
-<!--        <option value='2_sam'>24</option>-->
-<!--        <option value='5_john'>25</option>-->
-<!--    </select>-->
-<!--        <input type='submit' name='submit'/>-->
-<!--    </form>-->
-
-
-    <form method="post" action="/">
-        <div class="btn-group">
-            <select name="category" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
-                <option selected>Product Category</option>
-                <div th:each="category,iterStat : ${categories}">
-                    <option th:value="${category.getId()}" th:text="${category.getName()}">Product Category</option>
-                </div>
-            </select>
-            <select name="supplier" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
-                <option selected>Supplier</option>
-                <div th:each="supplier,iterStat : ${suppliers}">
-                    <option th:value="${supplier.getId()}" th:text="${supplier.getName()}">Supplier</option>
-                </div>
-            </select>
-            <button class="btn btn-info mb-3" type="submit">Filter</button>
-        </div>
-    </form>
-
+<div>
+    <div class="card">
+        <strong>Animals</strong>
+    </div>
     <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4 mb-3" th:each="prod,iterStat : ${products}">
-            <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
-                <div class="card-header">
-                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
-                    <p class="card-text" th:text="${prod.description}">Product description... </p>
+        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
+            <div class="card" style="margin-top: 10%">
+                <div class="crop">
+                    <img src="http://placehold.it/400x250/000/fff" class="card-title" th:attr="src=${prod.imgLink}">
                 </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
-                    </div>
-                    <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
-                    </div>
+            </div>
+            <div class="card-header">
+                <h4 class="card-title animal-name" th:text="${prod.name}">Product name</h4>
+                <p class="card-text animal-description" th:text="${prod.description}">Product description... </p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                </div>
+                <div class="card-text">
+                    <a class="btn btn-success" href="#">Add to cart</a>
                 </div>
             </div>
         </div>
     </div>
-
+</div>
 </div>
 
 <div th:replace="footer.html :: copy"></div>
