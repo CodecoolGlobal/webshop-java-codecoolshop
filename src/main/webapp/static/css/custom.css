@@ -93,3 +93,29 @@ h1 {
     width: 0px;  /* Remove scrollbar space */
     background: transparent;  /* Optional: just make scrollbar invisible */
 }
+
+
+.fa-stack[data-count]:after{
+    position:absolute;
+    right:0%;
+    top:0%;
+    content: attr(data-count);
+    font-size:40%;
+    padding:.6em;
+    border-radius:999px;
+    line-height:.75em;
+    color: white;
+    color:#17a2b8;
+    text-align:center;
+    min-width:2em;
+    font-weight:bold;
+    background: white;
+    border-style:solid;
+}
+.fa-circle {
+    color:#17a2b8;
+}
+
+.red-cart {
+    color: #17a2b8; background:white;
+}
