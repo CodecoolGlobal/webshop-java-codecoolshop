@@ -36,9 +36,9 @@
 
 <div class="container">
     <div id="products" class="wrapper">
-        <div class="col col-sm-12 col-md-6 col-lg-4">
+        <div>
             <div class="card">
-                <table th:each="prod,iterStat : ${cart.getProductsOfOrder()}" class="table table-bordered table-striped">
+                <table th:each="prod,iterStat : ${cart.getProductsOfOrder()}" class="table table-bordered">
                     <thead>
                         <th scope="col">Name</th>
                         <th scope="col">Quantiy</th>
@@ -59,6 +59,7 @@
     </div>
     <div>
         <h1 th:text="'Sum of price: ' + ${cart.getInstance().getPriceSum()} + '$'"> Sum Of Price</h1>
+        <a><button> </button></a>
     </div>
 </div>
 
