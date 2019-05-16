@@ -59,7 +59,7 @@
     </div>
     <div>
         <h1 th:text="'Sum of price: ' + ${cart.getInstance().getPriceSum()} + '$'"> Sum Of Price</h1>
-        <a><button> </button></a>
+        <a th:href="@{/checkout}" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i> </a>
     </div>
 </div>
 

@@ -24,6 +24,14 @@ public class Order {
 
     private static final String FOLDER_PATH = System.getProperty("user.dir") + "/orders/";
 
+    private String customerName;
+    private String customerEmail;
+    private String customerPhone;
+    private String country;
+    private String city;
+    private String address;
+    private String zip;
+
     private int id;
     private float priceSum;
     private int sumOfProducts;
@@ -122,5 +130,61 @@ public class Order {
 
         productDataStore.getAll().forEach(currentOrder::add);
         currentOrder.complete();
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 }
