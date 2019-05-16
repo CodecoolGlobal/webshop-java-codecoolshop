@@ -25,9 +25,7 @@ public class ShoppingCartController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
@@ -35,6 +33,18 @@ public class ShoppingCartController extends HttpServlet {
         context.setVariable("", productCategoryDataStore.find(1));
         context.setVariable("cart", Order.getInstance());
         engine.process("cart/cart.html", context, resp.getWriter());
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+
+        int productId = Integer.valueOf(req.getParameter("id"));
+        Order.getInstance().add(productDataStore.find(productId));
+
+        resp.sendRedirect("/");
+
     }
 
 }
