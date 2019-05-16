@@ -35,28 +35,30 @@
 </div>
 
 <div class="container">
-    <div id="products" class="row">
+    <div id="products" class="wrapper">
         <div class="col col-sm-12 col-md-6 col-lg-4">
             <div class="card">
-                <table th:each="prod,iterStat : ${cart.getProductsOfOrder()}">
+                <table th:each="prod,iterStat : ${cart.getProductsOfOrder()}" class="table table-bordered table-striped">
                     <thead>
-                        <th>Name</th>
-                        <th>Quantiy</th>
-                        <th>Sum Price</th>
-                        <th>Unit Price</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Quantiy</th>
+                        <th scope="col">Sum Price</th>
+                        <th scope="col">Unit Price</th>
                     </thead>
+                    <tbody>
                     <tr>
                         <td th:text="${prod.getKey().getName()}">Product name</td>
                         <td th:text="${prod.getValue()}">Quantity</td>
                         <td th:text="${cart.getSumOfPriceBy(prod.getKey())}">SumPrice of Item</td>
                         <td th:text="${prod.getKey().getDefaultPrice()}">Unit pirce</td>
                     </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
     <div>
-        <p th:text="'Sum of price:' + ${cart.getInstance().getPriceSum()}"> Sum Of Price</p>
+        <h1 th:text="'Sum of price: ' + ${cart.getInstance().getPriceSum()} + '$'"> Sum Of Price</h1>
     </div>
 </div>
 

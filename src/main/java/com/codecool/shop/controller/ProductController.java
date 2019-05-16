@@ -50,6 +50,7 @@ public class ProductController extends HttpServlet {
         context.setVariable("category", category);
         context.setVariable("categories", productCategoryDataStore.getAll());
         context.setVariable("suppliers", supplierDao.getAll());
+        context.setVariable("cart", Order.getInstance());
         filterProducts(category, supplier, context);
         engine.process("product/index.html", context, resp.getWriter());
     }

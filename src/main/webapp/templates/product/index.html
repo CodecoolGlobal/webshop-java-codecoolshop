@@ -23,6 +23,8 @@
     <!-- Latest compiled and minified CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
@@ -49,8 +51,17 @@
             </div>
         </select>
         <button class="btn btn-info mb-3" type="submit">Filter</button>
-        <a th:href="@{/shopping-cart}" class="btn btn-info mb-3">
-            <span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
+        <a th:href="@{/shopping-cart}" class="widget-header border-left pl-3 ml-3">
+            <div class="icontext">
+                <div class="icon-wrap icon-sm round border">
+                    <span class="fa-stack fa-2x has-badge" th:attr="data-count=${cart.getNumberOfProducts()}">
+                      <i class="fa fa-circle fa-stack-2x"></i>
+                      <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                    </span>
+
+                </div>
+
+            </div>
         </a>
     </div>
 </form></div>
