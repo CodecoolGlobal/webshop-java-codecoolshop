@@ -21,6 +21,7 @@ public class CheckoutController extends HttpServlet {
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+        context.setVariable("order", Order.getInstance());
         engine.process("checkout/checkout.html", context, resp.getWriter());
     }
 
@@ -33,7 +34,6 @@ public class CheckoutController extends HttpServlet {
         Order.getInstance().setCity(request.getParameter("ShippingCity"));
         Order.getInstance().setZip(request.getParameter("ShippingZip"));
         Order.getInstance().setAddress(request.getParameter("ShippingAddress"));
-
         response.sendRedirect("/payment");
     }
 }

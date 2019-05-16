@@ -25,6 +25,12 @@ public class PaymentController extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("order", Order.getInstance());
         engine.process("payment/payment.html", context, resp.getWriter());
+        Order.getInstance().complete();
+
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.sendRedirect("/");
+    }
 }
