@@ -37,21 +37,36 @@
 <div class="container">
     <div id="products" class="wrapper">
         <div>
-            <div class="card">
-                <table th:each="prod,iterStat : ${cart.getProductsOfOrder()}" class="table table-bordered">
+            <div class="card table table-bordered">
+                <table>
                     <thead>
                         <th scope="col">Name</th>
-                        <th scope="col">Quantiy</th>
+                        <th scope="col" colspan="3">Quantity</th>
                         <th scope="col">Sum Price</th>
                         <th scope="col">Unit Price</th>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td th:text="${prod.getKey().getName()}">Product name</td>
-                        <td th:text="${prod.getValue()}">Quantity</td>
-                        <td th:text="${cart.getSumOfPriceBy(prod.getKey())}">SumPrice of Item</td>
-                        <td th:text="${prod.getKey().getDefaultPrice()}">Unit pirce</td>
-                    </tr>
+                    <div  th:each="prod,iterStat : ${cart.getProductsOfOrder()}">
+                        <tr>
+                            <td th:text="${prod.getKey().getName()}">Product name</td>
+                            <td>
+                                <form action="/shopping-cart" method="post">
+                                    <button th:value="${prod.getKey().getId()}" name="reduce-item-by-id" type="submit">-</button>
+                                </form>
+                            </td>
+                            <td th:text="
+                                ${prod.getValue()}">Quantity
+                            </td>
+                            <td>
+                                <form action="/shopping-cart" method="post">
+                                    <button th:value="${prod.getKey().getId()}" name="add-item-by-id" type="submit">+</button>
+                                </form>
+                            </td>
+
+                            <td th:text="${cart.getSumOfPriceBy(prod.getKey())}">SumPrice of Item</td>
+                            <td th:text="${prod.getKey().getDefaultPrice()}">Unit price</td>
+                        </tr>
+                    </div>
                     </tbody>
                 </table>
             </div>
@@ -60,6 +75,9 @@
     <div>
         <h1 th:text="'Sum of price: ' + ${cart.getInstance().getPriceSum()} + '$'"> Sum Of Price</h1>
         <a th:href="@{/checkout}" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i> </a>
+    </div>
+    <div>
+        <a href="/"><button>Back to shop</button></a>
     </div>
 </div>
 
