@@ -26,7 +26,6 @@ public class ShoppingCartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("cart", Order.getInstance());
@@ -38,11 +37,20 @@ public class ShoppingCartController extends HttpServlet {
 
         ProductDao productDataStore = ProductDaoMem.getInstance();
 
-        int productId = Integer.valueOf(req.getParameter("id"));
-        Order.getInstance().add(productDataStore.find(productId));
+        if (req.getParameter("id") != null) {
+            int productId = Integer.valueOf(req.getParameter("id"));
+            Order.getInstance().add(productDataStore.find(productId));
 
-        resp.sendRedirect("/");
+            resp.sendRedirect("/");
+        } else if (req.getParameter("add-item-by-id") != null){
+            int productId = Integer.valueOf(req.getParameter("add-item-by-id"));
+            Order.getInstance().add(productDataStore.find(productId));
+            doGet(req, resp);
+        } else if (req.getParameter("reduce-item-by-id") != null){
+            int productId = Integer.valueOf(req.getParameter("reduce-item-by-id"));
+            Order.getInstance().reduce(productDataStore.find(productId));
+            doGet(req, resp);
+        }
 
     }
-
 }
