@@ -105,7 +105,7 @@ h1 {
     border-radius:999px;
     line-height:.75em;
     color: white;
-    color:#DF0000;
+    color:#17a2b8;
     text-align:center;
     min-width:2em;
     font-weight:bold;
@@ -113,9 +113,9 @@ h1 {
     border-style:solid;
 }
 .fa-circle {
-    color:#DF0000;
+    color:#17a2b8;
 }
 
 .red-cart {
-    color: #DF0000; background:white;
+    color: #17a2b8; background:white;
 }

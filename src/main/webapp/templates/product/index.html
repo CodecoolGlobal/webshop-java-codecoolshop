@@ -51,9 +51,9 @@
             </div>
         </select>
         <button class="btn btn-info mb-3" type="submit">Filter</button>
-        <a th:href="@{/shopping-cart}" class="widget-header border-left pl-3 ml-3">
+        <a th:href="@{/shopping-cart}" class="widget-header border-none">
             <div class="icontext">
-                <div class="icon-wrap icon-sm round border">
+                <div class="icon-wrap icon-sm round">
                     <span class="fa-stack fa-2x has-badge" th:attr="data-count=${cart.getNumberOfProducts()}">
                       <i class="fa fa-circle fa-stack-2x"></i>
                       <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
