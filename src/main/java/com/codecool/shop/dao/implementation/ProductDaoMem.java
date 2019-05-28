@@ -11,7 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,8 +26,8 @@ public class ProductDaoMem implements ProductDao {
         try {
             Files.lines(PATH).forEach(line -> add(new Product(line.strip().split("\\|"))));
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println("No such file or something is wrong with the file... go figure");
+            e.printStackTrace();
         }
     }
 
