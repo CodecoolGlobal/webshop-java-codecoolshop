@@ -31,9 +31,6 @@ public class ProductController extends HttpServlet {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 
-//        Map params = new HashMap<>();
-//        params.put("category", productCategoryDataStore.find(1));
-//        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
         if (req.getParameter("id") != null){
             int productId = Integer.valueOf(req.getParameter("id"));
             Order.getInstance().add(productDataStore.find(productId));
