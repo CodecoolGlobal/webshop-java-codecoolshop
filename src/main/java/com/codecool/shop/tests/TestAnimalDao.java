@@ -3,37 +3,34 @@ package com.codecool.shop.tests;
 import com.codecool.shop.dao.AnimalDao;
 import com.codecool.shop.dao.implementation.DB.AnimalDaoDB;
 import com.codecool.shop.dao.implementation.Mem.AnimalDaoMem;
-import com.codecool.shop.dao.implementation.Mem.SpeciesDaoMem;
-import com.codecool.shop.dao.implementation.Mem.ZooDaoMem;
-import com.codecool.shop.model.Animal;
-import com.codecool.shop.model.Species;
-import com.codecool.shop.model.Zoo;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestAnimalDao {
-    private AnimalDao animalDao;
 
-    /**
-     * Make a new instance every time before running a test
-     */
-    @BeforeEach
-    void setup() {
-        animalDao = AnimalDaoMem.getInstance();
+    private static Stream daos() {
+        return Stream.of(
+                AnimalDaoMem.getInstance(),
+                AnimalDaoDB.getInstance()
+        );
     }
 
-    @Test
-    void testFind() {
+    @Disabled
+    @ParameterizedTest
+    @MethodSource("daos")
+    void testFind(AnimalDao dao) {
         String expected = "id: 1, name: Griffon Vulture, defaultPrice: 1990,000000, defaultCurrency: USD, species: Bird, zoo: Montgomery Zoo";
-        assertEquals(expected, animalDao.find(1).toString());
+        assertEquals(expected, dao.find(1).toString());
     }
 
-//    @Test
+//    @ParameterizedTest
+//    @MethodSource("daos")
 //    void testGetBySupplier() {
 //        Zoo zoo = ZooDaoMem.getInstance().find(1);
 //        List<Animal> expected = new ArrayList<>();
@@ -44,7 +41,8 @@ public class TestAnimalDao {
 //        assertEquals(animalDao.getBy(zoo), expected);
 //    }
 //
-//    @Test
+//    @ParameterizedTest
+//    @MethodSource("daos")
 //    void testGetByProductCategory() {
 //        Species productCategory = SpeciesDaoMem.getInstance().find(1);
 //        List<Animal> expected = new ArrayList<>();
@@ -63,8 +61,9 @@ public class TestAnimalDao {
 //        assertEquals(animalDao.getBy(productCategory), expected);
 //    }
 
-    @Test
-    void testGetAll() {
-        assertEquals(48, animalDao.getAll().size());
+    @ParameterizedTest
+    @MethodSource("daos")
+    void testGetAll(AnimalDao dao) {
+        assertEquals(48, dao.getAll().size());
     }
 }
