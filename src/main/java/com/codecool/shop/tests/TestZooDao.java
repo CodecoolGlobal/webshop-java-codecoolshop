@@ -24,22 +24,33 @@ public class TestZooDao {
     @ParameterizedTest
     @MethodSource("daos")
     void testAdd(ZooDao dao) {
+        int expected = dao.getAll().size() + 1;
         Zoo newZoo = new Zoo("Sample", "Sample", "Sample", "Sample");
         dao.add(newZoo);
-        assertEquals(13, dao.getAll().size());
+        assertEquals(expected, dao.getAll().size());
     }
 
     @ParameterizedTest
     @MethodSource("daos")
     void testFindById(ZooDao dao) {
-        String expected = "id: 1, name: Montgomery Zoo, description: Montgomery Zoo is a 40-acre (16 ha) zoo located on the north side of Montgomery, Alabama. The zoo is an independent city family, and is aided by The Montgomery Area Zoolocal Society. It is home to approximately 750 animals representing 140 species.";
+        String expected = "id: 1, " +
+                "name: Montgomery Zoo, " +
+                "description: Montgomery Zoo is a 40-acre (16 ha) zoo " +
+                "located on the north side of Montgomery, Alabama. The zoo is an independent city family, " +
+                "and is aided by The Montgomery Area Zoolocal Society. " +
+                "It is home to approximately 750 animals representing 140 species.";
         assertEquals(expected, dao.find(1).toString());
     }
 
     @ParameterizedTest
     @MethodSource("daos")
     void testFindByName(ZooDao dao) {
-        String expected = "id: 1, name: Montgomery Zoo, description: Montgomery Zoo is a 40-acre (16 ha) zoo located on the north side of Montgomery, Alabama. The zoo is an independent city family, and is aided by The Montgomery Area Zoolocal Society. It is home to approximately 750 animals representing 140 species.";
+        String expected = "id: 1, " +
+                "name: Montgomery Zoo, " +
+                "description: Montgomery Zoo is a 40-acre (16 ha) zoo " +
+                "located on the north side of Montgomery, Alabama. The zoo is an independent city family, " +
+                "and is aided by The Montgomery Area Zoolocal Society. " +
+                "It is home to approximately 750 animals representing 140 species.";
         assertEquals(expected, dao.find("Montgomery Zoo").toString());
     }
 
