@@ -1,6 +1,7 @@
 package com.codecool.shop.tests;
 
 import com.codecool.shop.dao.AnimalDao;
+import com.codecool.shop.dao.implementation.DB.AnimalDaoDB;
 import com.codecool.shop.dao.implementation.Mem.AnimalDaoMem;
 import com.codecool.shop.dao.implementation.Mem.SpeciesDaoMem;
 import com.codecool.shop.dao.implementation.Mem.ZooDaoMem;
@@ -26,11 +27,11 @@ public class TestAnimalDao {
         animalDao = AnimalDaoMem.getInstance();
     }
 
-//    @Test
-//    void testFind() {
-//        String expected = "id: 1, name: Griffon Vulture, defaultPrice: 1990,000000, defaultCurrency: USD, species: Bird, zoo: Alaska Zoo";
-//        assertEquals(expected, animalDao.find(1).toString());
-//    }
+    @Test
+    void testFind() {
+        String expected = "id: 1, name: Griffon Vulture, defaultPrice: 1990,000000, defaultCurrency: USD, species: Bird, zoo: Montgomery Zoo";
+        assertEquals(expected, animalDao.find(1).toString());
+    }
 
 //    @Test
 //    void testGetBySupplier() {
@@ -61,9 +62,9 @@ public class TestAnimalDao {
 //        expected.add(animalDao.find(12));
 //        assertEquals(animalDao.getBy(productCategory), expected);
 //    }
-//
-//    @Test
-//    void testGetAll() {
-//        assertEquals(48, animalDao.getAll().size());
-//    }
+
+    @Test
+    void testGetAll() {
+        assertEquals(48, animalDao.getAll().size());
+    }
 }
