@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SpeciesDao {
 
-    void add(Species category);
+    void add(Species species);
     Species find(int id);
     Species find(String name);
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ZooDao {
 
-    void add(Zoo supplier);
+    void add(Zoo zoo);
     Zoo find(int id);
     Zoo find(String name);
     void remove(int id);

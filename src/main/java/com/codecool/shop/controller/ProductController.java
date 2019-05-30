@@ -4,9 +4,12 @@ import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.SpeciesDao;
 import com.codecool.shop.dao.AnimalDao;
 import com.codecool.shop.dao.ZooDao;
-import com.codecool.shop.dao.implementation.SpeciesDaoMem;
-import com.codecool.shop.dao.implementation.AnimalDaoMem;
-import com.codecool.shop.dao.implementation.ZooDaoMem;
+import com.codecool.shop.dao.implementation.DB.AnimalDaoDB;
+import com.codecool.shop.dao.implementation.DB.SpeciesDaoDB;
+import com.codecool.shop.dao.implementation.DB.ZooDaoDB;
+import com.codecool.shop.dao.implementation.Mem.SpeciesDaoMem;
+import com.codecool.shop.dao.implementation.Mem.AnimalDaoMem;
+import com.codecool.shop.dao.implementation.Mem.ZooDaoMem;
 import com.codecool.shop.model.Animal;
 import com.codecool.shop.model.Order;
 import org.thymeleaf.TemplateEngine;
@@ -26,13 +29,17 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        AnimalDao animalDataStore = AnimalDaoMem.getInstance();
-        SpeciesDao speciesDataStore = SpeciesDaoMem.getInstance();
-        ZooDao zooDataStore = ZooDaoMem.getInstance();
+//        AnimalDao animalDataStore = AnimalDaoMem.getInstance();
+//        SpeciesDao speciesDataStore = SpeciesDaoMem.getInstance();
+//        ZooDao zooDataStore = ZooDaoMem.getInstance();
+
+        AnimalDao animalDataStore = AnimalDaoDB.getInstance();
+        SpeciesDao speciesDataStore = SpeciesDaoDB.getInstance();
+        ZooDao zooDataStore = ZooDaoDB.getInstance();
 
         if (req.getParameter("id") != null){
             int animalId = Integer.valueOf(req.getParameter("id"));
-            Order.getInstance().add(animalDataStore.find(animalId));
+            Order.getInstance().add(animalId);
         }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
@@ -53,7 +60,10 @@ public class ProductController extends HttpServlet {
     }
 
     private List<Animal> filterAnimals(String species, String zoo) {
-        return AnimalDaoMem.getInstance().getAll().stream()
+//        AnimalDao datastore = AnimalDaoMem.getInstance();
+        AnimalDao dataStore = AnimalDaoDB.getInstance();
+
+        return dataStore.getAll().stream()
                 .filter(animal -> species == null || species.equals("") || animal.getSpecies().getId() == Integer.valueOf(species))
                 .filter(animal -> zoo == null || zoo.equals("") || animal.getZoo().getId() == Integer.valueOf(zoo))
                 .collect(Collectors.toList());

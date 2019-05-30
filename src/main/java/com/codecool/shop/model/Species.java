@@ -11,6 +11,13 @@ public class Species extends BaseModel {
         super(name);
         this.family = family;
         this.animals = new ArrayList<>();
+        this.description = description;
+    }
+
+    public Species(int id, String name, String family, String description) {
+        super(id, name, description);
+        this.family = family;
+        this.animals = new ArrayList<>();
     }
 
     public Species(String[] data) {

@@ -1,26 +1,38 @@
 package com.codecool.shop.model;
 
-import com.codecool.shop.dao.implementation.SpeciesDaoMem;
-import com.codecool.shop.dao.implementation.ZooDaoMem;
+import com.codecool.shop.dao.implementation.DB.ZooDaoDB;
+import com.codecool.shop.dao.implementation.Mem.SpeciesDaoMem;
+import com.codecool.shop.dao.implementation.Mem.ZooDaoMem;
 
 import java.util.Currency;
 
 public class Animal extends BaseModel {
 
-    private float defaultPrice;
+    private double defaultPrice;
     private Currency defaultCurrency;
     private Species species;
     private Zoo zoo;
     private String imgLink;
 
 
-    public Animal(String name, Species species, float defaultPrice, String currencyString, String description, String imgLink) {
+    public Animal(String name, Species species, double defaultPrice, String currencyString, String description, String imgLink) {
         super(name, description);
         this.species = species;
         this.defaultPrice = defaultPrice;
         this.defaultCurrency = Currency.getInstance(currencyString);
         this.imgLink = imgLink;
-        zoo = ZooDaoMem.getInstance().next();
+//        zoo = ZooDaoMem.getInstance().next();
+        zoo = ZooDaoDB.getInstance().next();
+    }
+
+    public Animal(int id, String name, Species species, double defaultPrice, String currencyString, String description, String imgLink) {
+        super(id, name, description);
+        this.species = species;
+        this.defaultPrice = defaultPrice;
+        this.defaultCurrency = Currency.getInstance(currencyString);
+        this.imgLink = imgLink;
+//        zoo = ZooDaoMem.getInstance().next();
+        zoo = ZooDaoDB.getInstance().next();
     }
 
     public Animal(String[] data) {
@@ -29,10 +41,11 @@ public class Animal extends BaseModel {
         defaultPrice = Integer.valueOf(data[2]);
         defaultCurrency = Currency.getInstance(data[3]);
         imgLink = data[5];
-        zoo = ZooDaoMem.getInstance().next();
+//        zoo = ZooDaoMem.getInstance().next();
+        zoo = ZooDaoDB.getInstance().next();
     }
 
-    public float getDefaultPrice() {
+    public double getDefaultPrice() {
         return defaultPrice;
     }
 
