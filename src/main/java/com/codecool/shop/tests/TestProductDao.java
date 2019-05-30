@@ -27,6 +27,12 @@ public class TestProductDao {
     }
 
     @Test
+    void testFind() {
+        String expected = "id: 1, name: Griffon Vulture, defaultPrice: 1990,000000, defaultCurrency: USD, species: Bird, zoo: Alaska Zoo";
+        assertEquals(expected, animalDao.find(1).toString());
+    }
+
+    @Test
     void testGetBySupplier() {
         Zoo zoo = ZooDaoMem.getInstance().find(1);
         List<Animal> expected = new ArrayList<>();
