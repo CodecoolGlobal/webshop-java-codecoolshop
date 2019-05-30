@@ -22,4 +22,9 @@ public class RegistrationController extends HttpServlet {
         engine.process("registration/registration.html", context, resp.getWriter());
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
+
 }
