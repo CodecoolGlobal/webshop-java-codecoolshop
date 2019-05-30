@@ -58,19 +58,4 @@ public class AnimalDaoMem implements AnimalDao {
     public List<Animal> getAll() {
         return data;
     }
-
-    @Override
-    public List<Animal> getBy(Zoo zoo) {
-        return data.stream().filter(t -> t.getZoo().equals(zoo)).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Animal> getBy(Species species) {
-        return data.stream().filter(t -> t.getSpecies().equals(species)).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Animal> getBy(Zoo zoo, Species species) {
-        return data.stream().filter(t -> t.getZoo().equals(zoo) && t.getSpecies().equals(species)).collect(Collectors.toList());
-    }
 }

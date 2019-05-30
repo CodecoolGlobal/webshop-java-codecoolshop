@@ -1,11 +1,5 @@
 package com.codecool.shop.model;
 
-import com.codecool.shop.dao.SpeciesDao;
-import com.codecool.shop.dao.AnimalDao;
-import com.codecool.shop.dao.ZooDao;
-import com.codecool.shop.dao.implementation.Mem.SpeciesDaoMem;
-import com.codecool.shop.dao.implementation.Mem.AnimalDaoMem;
-import com.codecool.shop.dao.implementation.Mem.ZooDaoMem;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -33,15 +27,15 @@ public class Order {
     private String zip;
 
     private int id;
-    private float priceSum;
+    private double priceSum;
     private int sumOfProducts;
     private boolean confirmed;
     private boolean paid;
-    private Map<Animal, Integer> products;
+    private Map<Animal, Integer> animals;
 
     private Order(){
         this.id = ++instanceCounter;
-        products = new HashMap<>();
+        animals = new HashMap<>();
     }
 
     public static Order getInstance() {
@@ -51,16 +45,16 @@ public class Order {
         return instance;
     }
 
-    public void add(Animal product){
-        products.merge(product, 1, Integer::sum);
+    public void add(Animal animal){
+        animals.merge(animal, 1, Integer::sum);
     }
 
-    public void reduce(Animal product){
-        if (products.get(product) != null) {
-            if(products.get(product) == 1){
-                products.remove(product);
+    public void reduce(Animal animal){
+        if (animals.get(animal) != null) {
+            if(animals.get(animal) == 1){
+                animals.remove(animal);
             }else{
-                products.put(product, products.get(product) - 1);
+                animals.put(animal, animals.get(animal) - 1);
             }
         }
     }
@@ -69,17 +63,17 @@ public class Order {
         return id;
     }
 
-    public float getPriceSum(){
+    public double getPriceSum(){
         priceSum = 0;
-        for (Map.Entry<Animal, Integer> product : products.entrySet()){
-            priceSum += product.getKey().getDefaultPrice() * product.getValue();
+        for (Map.Entry<Animal, Integer> animal : animals.entrySet()){
+            priceSum += animal.getKey().getDefaultPrice() * animal.getValue();
         }
         return priceSum;
     }
 
     public int getNumberOfProducts(){
         sumOfProducts = 0;
-        for(int value : products.values()){
+        for(int value : animals.values()){
             sumOfProducts += value;
         }
         return sumOfProducts;
@@ -94,14 +88,14 @@ public class Order {
     }
 
     public Map<Animal, Integer> getProductsOfOrder(){
-        return products;
+        return animals;
     }
 
-    public float getSumOfPriceBy(Animal product) {
-        if (products.get(product) != null) {
-            return products.get(product) * product.getDefaultPrice();
+    public double getSumOfPriceBy(Animal animal) {
+        if (animals.get(animal) != null) {
+            return animals.get(animal) * animal.getDefaultPrice();
         }
-        return 0f;
+        return 0.0;
     }
 
     public void complete() {
@@ -120,16 +114,6 @@ public class Order {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        AnimalDao productDataStore = AnimalDaoMem.getInstance();
-        SpeciesDao productCategoryDataStore = SpeciesDaoMem.getInstance();
-        ZooDao supplierDataStore = ZooDaoMem.getInstance();
-        Order currentOrder = Order.getInstance();
-
-        productDataStore.getAll().forEach(currentOrder::add);
-        currentOrder.complete();
     }
 
     public String getCustomerName() {
