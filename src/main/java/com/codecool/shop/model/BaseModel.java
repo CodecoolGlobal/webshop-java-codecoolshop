@@ -3,7 +3,7 @@ package com.codecool.shop.model;
 
 import java.lang.reflect.Field;
 
-public class BaseModel {
+public abstract class BaseModel {
 
     protected int id;
     protected String name;
@@ -14,6 +14,12 @@ public class BaseModel {
     }
 
     public BaseModel(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public BaseModel(int id, String name, String description) {
+        this.id = id;
         this.name = name;
         this.description = description;
     }

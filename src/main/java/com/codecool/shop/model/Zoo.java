@@ -15,6 +15,13 @@ public class Zoo extends BaseModel {
         this.animals = new ArrayList<>();
     }
 
+    public Zoo(int id, String name, String state, String city, String description) {
+        super(id, name, description);
+        this.state = state;
+        this.city = city;
+        this.animals = new ArrayList<>();
+    }
+
     public Zoo(String[] data) {
         super(data[0], data[3]);
         state = data[1];
@@ -42,5 +49,13 @@ public class Zoo extends BaseModel {
                 this.name,
                 this.description
         );
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getCity() {
+        return city;
     }
 }

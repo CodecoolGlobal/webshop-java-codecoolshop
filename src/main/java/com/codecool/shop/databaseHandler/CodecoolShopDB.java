@@ -5,25 +5,23 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 
-public class CodecoolShopDb {
+public class CodecoolShopDB {
     private static final String DEFAULT_PATH = System.getProperty("user.dir") + "/src/data";
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
     private static final String DB_USER = System.getenv("POSTGRES_DB_USER");
     private static final String DB_PASSWORD = System.getenv("POSTGRES_DB_PASSWORD");
 
-    private static CodecoolShopDb instance;
+    private static CodecoolShopDB instance;
 
-    private CodecoolShopDb() {
+    private CodecoolShopDB() {
         executeUpdateFromFile("/database/species.sql");
         executeUpdateFromFile("/database/zoo.sql");
         executeUpdateFromFile("/database/animal.sql");
     }
 
-    public static CodecoolShopDb getInstance() {
-        if (instance == null) instance = new CodecoolShopDb();
+    public static CodecoolShopDB getInstance() {
+        if (instance == null) instance = new CodecoolShopDB();
         return instance;
     }
 
@@ -56,6 +54,7 @@ public class CodecoolShopDb {
             System.err.println("Bad filepath");
         } catch (SQLException sqlError) {
             System.err.println("Sql problem");
+            sqlError.printStackTrace();
         }
     }
 
@@ -72,11 +71,13 @@ public class CodecoolShopDb {
     }
 
     public static void main(String[] args) throws SQLException {
-        CodecoolShopDb cdb = CodecoolShopDb.getInstance();
+        CodecoolShopDB cdb = CodecoolShopDB.getInstance();
 
         ResultSet birds = cdb.executeQuery("select * from animals where species='Bird'");
         while(birds.next()) {
-            System.out.println(birds.getString(1));
+            System.out.println(birds.getString("name"));
         }
+        cdb.executeUpdate("insert into animals values(default, 'name', 'Mammal', 4000, 'USD', 'desc', 'url')");
+        cdb.executeUpdate("delete from animals where name = 'name' and description = 'desc'");
     }
 }

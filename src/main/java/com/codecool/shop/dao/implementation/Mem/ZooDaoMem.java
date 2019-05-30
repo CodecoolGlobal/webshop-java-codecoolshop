@@ -1,7 +1,6 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.implementation.Mem;
 
 import com.codecool.shop.dao.ZooDao;
-import com.codecool.shop.model.Species;
 import com.codecool.shop.model.Zoo;
 
 import java.io.IOException;
