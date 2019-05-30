@@ -18,6 +18,7 @@ public class CodecoolShopDB {
         executeUpdateFromFile("/database/species.sql");
         executeUpdateFromFile("/database/zoo.sql");
         executeUpdateFromFile("/database/animal.sql");
+        executeUpdateFromFile("/database/users.sql");
     }
 
     public static CodecoolShopDB getInstance() {
@@ -68,16 +69,5 @@ public class CodecoolShopDB {
             System.err.println("ERROR: SQL Timeout");
         }
         return null;
-    }
-
-    public static void main(String[] args) throws SQLException {
-        CodecoolShopDB cdb = CodecoolShopDB.getInstance();
-
-        ResultSet birds = cdb.executeQuery("select * from animals where species='Bird'");
-        while(birds.next()) {
-            System.out.println(birds.getString("name"));
-        }
-        cdb.executeUpdate("insert into animals values(default, 'name', 'Mammal', 4000, 'USD', 'desc', 'url')");
-        cdb.executeUpdate("delete from animals where name = 'name' and description = 'desc'");
     }
 }

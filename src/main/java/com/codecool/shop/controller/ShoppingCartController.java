@@ -1,9 +1,6 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.AnimalDao;
-import com.codecool.shop.dao.implementation.DB.AnimalDaoDB;
-import com.codecool.shop.dao.implementation.Mem.AnimalDaoMem;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -30,10 +27,6 @@ public class ShoppingCartController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-//        AnimalDao animalDataStore = AnimalDaoMem.getInstance();
-        AnimalDao animalDataStore = AnimalDaoDB.getInstance();
-
         if (req.getParameter("id") != null) {
             int animalId = Integer.valueOf(req.getParameter("id"));
             Order.getInstance().add(animalId);
