@@ -1,7 +1,7 @@
 package com.codecool.shop.tests;
 
 import com.codecool.shop.dao.SpeciesDao;
-import com.codecool.shop.dao.implementation.SpeciesDaoMem;
+import com.codecool.shop.dao.implementation.Mem.SpeciesDaoMem;
 import com.codecool.shop.model.Species;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
