@@ -12,9 +12,19 @@ import java.util.List;
 public class ZooDaoDB implements ZooDao {
     private static ZooDaoDB instance = null;
     private CodecoolShopDB cdb;
+    private int current;
+    private int numOfZoos;
 
     private ZooDaoDB() {
         cdb = CodecoolShopDB.getInstance();
+        try {
+            ResultSet result = cdb.executeQuery("SELECT COUNT(*) FROM zoos");
+            if (result.next()) {
+                numOfZoos = result.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static ZooDaoDB getInstance() {
@@ -30,6 +40,7 @@ public class ZooDaoDB implements ZooDao {
                     zoo.getState(),
                     zoo.getCity(),
                     zoo.getDescription()));
+            numOfZoos++;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,6 +78,7 @@ public class ZooDaoDB implements ZooDao {
     public void remove(int id) {
         try {
             cdb.executeUpdate(String.format("DELETE FROM zoos WHERE id = %1$d", id));
+            numOfZoos--;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -94,5 +106,20 @@ public class ZooDaoDB implements ZooDao {
                 result.getString("state"),
                 result.getString("city"),
                 result.getString("description"));
+    }
+
+    public Zoo next() {
+        current = (current % numOfZoos) + 1;
+        ResultSet result;
+        try {
+            result = cdb.executeQuery("SELECT * FROM zoos");
+            for (int i = 0; i < current; i++) {
+                result.next();
+            }
+            return getZooFromResultSet(result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

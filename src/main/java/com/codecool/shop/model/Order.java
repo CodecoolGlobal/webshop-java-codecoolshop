@@ -1,5 +1,6 @@
 package com.codecool.shop.model;
 
+import com.codecool.shop.dao.implementation.DB.AnimalDaoDB;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -45,16 +46,22 @@ public class Order {
         return instance;
     }
 
-    public void add(Animal animal){
-        animals.merge(animal, 1, Integer::sum);
+    public void add(int animalId){
+        Animal existingAnimal = animals.keySet().stream().filter(anim -> anim.getId() == animalId)
+                                                .findFirst().orElse(null);
+        if (existingAnimal == null) animals.put(AnimalDaoDB.getInstance().find(animalId), 1);
+        else animals.merge(existingAnimal, 1, Integer::sum);
     }
 
-    public void reduce(Animal animal){
-        if (animals.get(animal) != null) {
-            if(animals.get(animal) == 1){
-                animals.remove(animal);
+    public void reduce(int animalId){
+        Animal existingAnimal = animals.keySet().stream().filter(anim -> anim.getId() == animalId)
+                .findFirst().orElse(null);
+
+        if (animals.get(existingAnimal) != null) {
+            if(animals.get(existingAnimal) == 1){
+                animals.remove(existingAnimal);
             }else{
-                animals.put(animal, animals.get(animal) - 1);
+                animals.put(existingAnimal, animals.get(existingAnimal) - 1);
             }
         }
     }

@@ -2,6 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.AnimalDao;
+import com.codecool.shop.dao.implementation.DB.AnimalDaoDB;
 import com.codecool.shop.dao.implementation.Mem.AnimalDaoMem;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -30,20 +31,21 @@ public class ShoppingCartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        AnimalDao productDataStore = AnimalDaoMem.getInstance();
+//        AnimalDao animalDataStore = AnimalDaoMem.getInstance();
+        AnimalDao animalDataStore = AnimalDaoDB.getInstance();
 
         if (req.getParameter("id") != null) {
-            int productId = Integer.valueOf(req.getParameter("id"));
-            Order.getInstance().add(productDataStore.find(productId));
+            int animalId = Integer.valueOf(req.getParameter("id"));
+            Order.getInstance().add(animalId);
 
             resp.sendRedirect("/");
         } else if (req.getParameter("add-item-by-id") != null){
-            int productId = Integer.valueOf(req.getParameter("add-item-by-id"));
-            Order.getInstance().add(productDataStore.find(productId));
+            int animalId = Integer.valueOf(req.getParameter("add-item-by-id"));
+            Order.getInstance().add(animalId);
             doGet(req, resp);
         } else if (req.getParameter("reduce-item-by-id") != null){
-            int productId = Integer.valueOf(req.getParameter("reduce-item-by-id"));
-            Order.getInstance().reduce(productDataStore.find(productId));
+            int animalId = Integer.valueOf(req.getParameter("reduce-item-by-id"));
+            Order.getInstance().reduce(animalId);
             doGet(req, resp);
         }
 
