@@ -1,6 +1,8 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.UserDao;
+import com.codecool.shop.dao.implementation.DB.UserDaoDB;
 import com.codecool.shop.model.User;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -28,7 +30,10 @@ public class RegistrationController extends HttpServlet {
         String registrationEmail = req.getParameter("RegistrationEmail");
         String registrationPassword = req.getParameter("RegistrationPassword");
 
-        User user1 = new User(registrationName, registrationEmail, registrationPassword);
+        User user = new User(registrationName, registrationEmail, registrationPassword);
+
+        UserDao userDao = UserDaoDB.getInstance();
+        userDao.add(user);
 
         resp.sendRedirect("/");
 

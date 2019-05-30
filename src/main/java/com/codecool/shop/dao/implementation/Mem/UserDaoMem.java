@@ -1,11 +1,8 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.implementation.Mem;
 
 import com.codecool.shop.dao.UserDao;
-import com.codecool.shop.model.Animal;
 import com.codecool.shop.model.User;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
