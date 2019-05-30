@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CodecoolShopDb {
     private static final String DEFAULT_PATH = System.getProperty("user.dir") + "/src/data";
@@ -56,6 +54,7 @@ public class CodecoolShopDb {
             System.err.println("Bad filepath");
         } catch (SQLException sqlError) {
             System.err.println("Sql problem");
+            sqlError.printStackTrace();
         }
     }
 
@@ -76,7 +75,9 @@ public class CodecoolShopDb {
 
         ResultSet birds = cdb.executeQuery("select * from animals where species='Bird'");
         while(birds.next()) {
-            System.out.println(birds.getString(1));
+            System.out.println(birds.getString("name"));
         }
+        cdb.executeUpdate("insert into animals values(default, 'name', 'Mammal', 4000, 'USD', 'desc', 'url')");
+        cdb.executeUpdate("delete from animals where name = 'name' and description = 'desc'");
     }
 }

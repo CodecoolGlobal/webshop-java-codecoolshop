@@ -3,9 +3,9 @@ package com.codecool.shop.model;
 import com.codecool.shop.dao.SpeciesDao;
 import com.codecool.shop.dao.AnimalDao;
 import com.codecool.shop.dao.ZooDao;
-import com.codecool.shop.dao.implementation.SpeciesDaoMem;
-import com.codecool.shop.dao.implementation.AnimalDaoMem;
-import com.codecool.shop.dao.implementation.ZooDaoMem;
+import com.codecool.shop.dao.implementation.Mem.SpeciesDaoMem;
+import com.codecool.shop.dao.implementation.Mem.AnimalDaoMem;
+import com.codecool.shop.dao.implementation.Mem.ZooDaoMem;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
