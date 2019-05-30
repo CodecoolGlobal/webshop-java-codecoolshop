@@ -36,16 +36,16 @@
     <div>
         <form method="post" action="/">
             <div class="btn-group">
-                <select name="category" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
-                    <option selected>Product Category</option>
-                    <div th:each="category,iterStat : ${categories}">
-                        <option th:value="${category.getId()}" th:text="${category.getName()}">Product Category</option>
+                <select name="species" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
+                    <option selected th:value="${null}">Product Category</option>
+                    <div th:each="specie,iterStat : ${species}">
+                        <option th:value="${specie.getId()}" th:text="${specie.getName()}"></option>
                     </div>
                 </select>
-                <select name="supplier" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
-                    <option selected>Supplier</option>
-                    <div th:each="supplier,iterStat : ${suppliers}">
-                        <option th:value="${supplier.getId()}" th:text="${supplier.getName()}">Supplier</option>
+                <select name="zoo" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
+                    <option selected th:value="${null}">Supplier</option>
+                    <div th:each="zoo,iterStat : ${zoos}">
+                        <option th:value="${zoo.getId()}" th:text="${zoo.getName()}"></option>
                     </div>
                 </select>
                 <button class="btn btn-info mb-3" type="submit">Filter</button>
@@ -66,24 +66,24 @@
     </div>
 
     <div>
-        <div id="products" class="row">
-            <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
+        <div id="animal" class="row">
+            <div class="col col-sm-12 col-md-6 col-lg-4" th:each="animal,iterStat : ${animals}">
                 <div class="card" style="margin-top: 10%">
                     <div class="crop">
-                        <img src="http://placehold.it/400x250/000/fff" class="card-title" th:attr="src=${prod.imgLink}">
+                        <img src="http://placehold.it/400x250/000/fff" class="card-title" th:attr="src=${animal.imgLink}">
                     </div>
                 </div>
                 <div class="card-header">
-                    <h4 class="card-title animal-name" th:text="${prod.name}">Product name</h4>
-                    <p class="card-text animal-description" th:text="${prod.description}">Product description... </p>
+                    <h4 class="card-title animal-name" th:text="${animal.name}">Product name</h4>
+                    <p class="card-text animal-description" th:text="${animal.description}">Product description... </p>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                        <p class="lead" th:text="${animal.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
                         <form action="/shopping-cart" method="post">
-                            <button class="btn btn-success" name="id" th:value="${prod.getId()}" type="submit">Add to Cart</button>
+                            <button class="btn btn-success" name="id" th:value="${animal.getId()}" type="submit">Add to Cart</button>
                         </form>
                     </div>
                 </div>
