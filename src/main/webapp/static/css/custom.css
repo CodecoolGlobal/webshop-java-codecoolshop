@@ -119,3 +119,11 @@ h1 {
 .red-cart {
     color: #17a2b8; background:white;
 }
+
+#paypal-img{
+    width: 70%;
+}
+
+#nav-tab-paypal{
+    display: inline-block;
+}

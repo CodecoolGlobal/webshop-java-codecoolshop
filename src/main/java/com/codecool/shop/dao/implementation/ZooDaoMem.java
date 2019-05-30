@@ -1,7 +1,8 @@
 package com.codecool.shop.dao.implementation;
 
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.model.Supplier;
+import com.codecool.shop.dao.ZooDao;
+import com.codecool.shop.model.Species;
+import com.codecool.shop.model.Zoo;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,20 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class SupplierDaoMem implements SupplierDao {
+public class ZooDaoMem implements ZooDao {
 
-    private static final Path PATH = Paths.get(System.getProperty("user.dir"),"/src/data/suppliers.csv");
+    private static final Path PATH = Paths.get(System.getProperty("user.dir"),"/src/data/csv/zoos.csv");
 
     private int current;
-    private List<Supplier> data = new ArrayList<>();
-    private static SupplierDaoMem instance = null;
+    private List<Zoo> data = new ArrayList<>();
+    private static ZooDaoMem instance = null;
 
     /* A private Constructor prevents any other class from instantiating.
      */
-    private SupplierDaoMem() {
+    private ZooDaoMem() {
         try {
             Files.lines(PATH).forEach(line -> {
-                add(new Supplier(line.strip().split("\\|")));
+                add(new Zoo(line.strip().split("\\|")));
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,22 +33,27 @@ public class SupplierDaoMem implements SupplierDao {
         }
     }
 
-    public static SupplierDaoMem getInstance() {
+    public static ZooDaoMem getInstance() {
         if (instance == null) {
-            instance = new SupplierDaoMem();
+            instance = new ZooDaoMem();
         }
         return instance;
     }
 
     @Override
-    public void add(Supplier supplier) {
+    public void add(Zoo supplier) {
         supplier.setId(data.size() + 1);
         data.add(supplier);
     }
 
     @Override
-    public Supplier find(int id) {
+    public Zoo find(int id) {
         return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+    }
+
+    @Override
+    public Zoo find(String name) {
+        return data.stream().filter(zoo -> zoo.getName().equals(name)).findFirst().orElse(null);
     }
 
     @Override
@@ -56,15 +62,15 @@ public class SupplierDaoMem implements SupplierDao {
     }
 
     @Override
-    public List<Supplier> getAll() {
+    public List<Zoo> getAll() {
         return data;
     }
 
-    public Supplier next() {
+    public Zoo next() {
         return data.get((++current) % data.size());
     }
 
-    public Supplier getRandom() {
+    public Zoo getRandom() {
         return data.get(new Random().nextInt(data.size()));
     }
 }
