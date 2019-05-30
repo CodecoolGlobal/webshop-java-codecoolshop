@@ -49,7 +49,9 @@ public class AnimalDaoDB implements AnimalDao {
     public Animal find(int id) {
         ResultSet result;
         try {
-            result = cdb.executeQuery(String.format("SELECT * FROM animals WHERE id = %1$d", id));
+            result = cdb.executeQuery(String.format(
+                    "SELECT * FROM animals WHERE id = %1$d", id)
+            );
             if (result.next()) {
                 return getAnimalFromResultSet(result);
             }
