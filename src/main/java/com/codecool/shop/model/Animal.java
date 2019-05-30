@@ -1,34 +1,35 @@
 package com.codecool.shop.model;
 
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.SpeciesDaoMem;
+import com.codecool.shop.dao.implementation.ZooDaoMem;
 
 import java.util.Currency;
 
-public class Product extends BaseModel {
+public class Animal extends BaseModel {
 
     private float defaultPrice;
     private Currency defaultCurrency;
-    private ProductCategory productCategory;
-    private Supplier supplier;
+    private Species species;
+    private Zoo zoo;
     private String imgLink;
 
 
-    public Product(String name, ProductCategory productCategory, float defaultPrice, String currencyString, String description, String imgLink) {
+    public Animal(String name, Species species, float defaultPrice, String currencyString, String description, String imgLink) {
         super(name, description);
-        this.productCategory = productCategory;
+        this.species = species;
         this.defaultPrice = defaultPrice;
         this.defaultCurrency = Currency.getInstance(currencyString);
         this.imgLink = imgLink;
+        zoo = ZooDaoMem.getInstance().next();
     }
 
-    public Product(String[] data) {
+    public Animal(String[] data) {
         super(data[0], data[4]);
-        productCategory = ProductCategoryDaoMem.getInstance().find(data[1]);
+        species = SpeciesDaoMem.getInstance().find(data[1]);
         defaultPrice = Integer.valueOf(data[2]);
         defaultCurrency = Currency.getInstance(data[3]);
         imgLink = data[5];
-        supplier = SupplierDaoMem.getInstance().next();
+        zoo = ZooDaoMem.getInstance().next();
     }
 
     public float getDefaultPrice() {
@@ -56,22 +57,22 @@ public class Product extends BaseModel {
         this.defaultCurrency = Currency.getInstance(currency);
     }
 
-    public ProductCategory getProductCategory() {
-        return productCategory;
+    public Species getSpecies() {
+        return species;
     }
 
-    public void setProductCategory(ProductCategory productCategory) {
-        this.productCategory = productCategory;
-        this.productCategory.addProduct(this);
+    public void setSpecies(Species species) {
+        this.species = species;
+        this.species.addProduct(this);
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+    public Zoo getZoo() {
+        return zoo;
     }
 
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
-        this.supplier.addProduct(this);
+    public void setZoo(Zoo zoo) {
+        this.zoo = zoo;
+        this.zoo.addProduct(this);
     }
 
 
@@ -81,14 +82,14 @@ public class Product extends BaseModel {
                         "name: %2$s, " +
                         "defaultPrice: %3$f, " +
                         "defaultCurrency: %4$s, " +
-                        "productCategory: %5$s, " +
-                        "supplier: %6$s",
+                        "species: %5$s, " +
+                        "zoo: %6$s",
                 this.id,
                 this.name,
                 this.defaultPrice,
                 this.defaultCurrency.toString(),
-                this.productCategory.getName(),
-                this.supplier.getName());
+                this.species.getName(),
+                this.zoo.getName());
     }
 
     public String getImgLink() {
