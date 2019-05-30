@@ -4,12 +4,7 @@ import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.SpeciesDao;
 import com.codecool.shop.dao.AnimalDao;
 import com.codecool.shop.dao.ZooDao;
-import com.codecool.shop.dao.implementation.DB.AnimalDaoDB;
-import com.codecool.shop.dao.implementation.DB.SpeciesDaoDB;
-import com.codecool.shop.dao.implementation.DB.ZooDaoDB;
-import com.codecool.shop.dao.implementation.Mem.SpeciesDaoMem;
-import com.codecool.shop.dao.implementation.Mem.AnimalDaoMem;
-import com.codecool.shop.dao.implementation.Mem.ZooDaoMem;
+import com.codecool.shop.dao.implementation.Main.MainDao;
 import com.codecool.shop.model.Animal;
 import com.codecool.shop.model.Order;
 import org.thymeleaf.TemplateEngine;
@@ -29,13 +24,9 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        AnimalDao animalDataStore = AnimalDaoMem.getInstance();
-//        SpeciesDao speciesDataStore = SpeciesDaoMem.getInstance();
-//        ZooDao zooDataStore = ZooDaoMem.getInstance();
-
-        AnimalDao animalDataStore = AnimalDaoDB.getInstance();
-        SpeciesDao speciesDataStore = SpeciesDaoDB.getInstance();
-        ZooDao zooDataStore = ZooDaoDB.getInstance();
+        AnimalDao animalDataStore = MainDao.getAnimalDaoInstance();
+        SpeciesDao speciesDataStore = MainDao.getSpeciesDaoInstance();
+        ZooDao zooDataStore = MainDao.getZooDaoInstance();
 
         if (req.getParameter("id") != null){
             int animalId = Integer.valueOf(req.getParameter("id"));
@@ -51,7 +42,7 @@ public class ProductController extends HttpServlet {
         context.setVariable("species", speciesDataStore.getAll());
         context.setVariable("zoos", zooDataStore.getAll());
         context.setVariable("cart", Order.getInstance());
-        context.setVariable("animals", filterAnimals(filter_species, filter_zoo));
+        context.setVariable("animals", filterAnimals(filter_species, filter_zoo, animalDataStore));
         engine.process("product/index.html", context, resp.getWriter());
     }
 
@@ -59,11 +50,8 @@ public class ProductController extends HttpServlet {
         doGet(req, resp);
     }
 
-    private List<Animal> filterAnimals(String species, String zoo) {
-//        AnimalDao datastore = AnimalDaoMem.getInstance();
-        AnimalDao dataStore = AnimalDaoDB.getInstance();
-
-        return dataStore.getAll().stream()
+    private List<Animal> filterAnimals(String species, String zoo, AnimalDao animalDataStore) {
+        return animalDataStore.getAll().stream()
                 .filter(animal -> species == null || species.equals("") || animal.getSpecies().getId() == Integer.valueOf(species))
                 .filter(animal -> zoo == null || zoo.equals("") || animal.getZoo().getId() == Integer.valueOf(zoo))
                 .collect(Collectors.toList());

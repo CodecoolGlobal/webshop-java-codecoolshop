@@ -36,9 +36,9 @@ public class AnimalDaoMem implements AnimalDao {
     }
 
     @Override
-    public void add(Animal product) {
-        product.setId(data.size() + 1);
-        data.add(product);
+    public void add(Animal animal) {
+        animal.setId(data.size() + 1);
+        data.add(animal);
     }
 
     @Override
