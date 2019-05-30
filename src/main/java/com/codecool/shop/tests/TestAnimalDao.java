@@ -4,6 +4,8 @@ import com.codecool.shop.dao.AnimalDao;
 import com.codecool.shop.dao.implementation.DB.AnimalDaoDB;
 import com.codecool.shop.dao.implementation.Mem.AnimalDaoMem;
 
+import com.codecool.shop.model.Animal;
+import com.codecool.shop.model.Species;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -19,6 +21,22 @@ public class TestAnimalDao {
                 AnimalDaoMem.getInstance(),
                 AnimalDaoDB.getInstance()
         );
+    }
+
+    @Disabled
+    @ParameterizedTest
+    @MethodSource("daos")
+    void testAdd(AnimalDao dao) {
+        Animal newAnimal = new Animal(
+                "Sample",
+                new Species("", "", ""),
+                0f,
+                "USD",
+                "",
+                ""
+        );
+        dao.add(newAnimal);
+        assertEquals(49, dao.getAll().size());
     }
 
     @Disabled
