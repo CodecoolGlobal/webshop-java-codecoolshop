@@ -15,7 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestProductDao {
+public class TestAnimalDao {
     private AnimalDao animalDao;
 
     /**
@@ -60,5 +60,10 @@ public class TestProductDao {
         expected.add(animalDao.find(11));
         expected.add(animalDao.find(12));
         assertEquals(animalDao.getBy(productCategory), expected);
+    }
+
+    @Test
+    void testGetAll() {
+        assertEquals(48, animalDao.getAll().size());
     }
 }
