@@ -1,10 +1,10 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.model.User;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +24,13 @@ public class RegistrationController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String registrationName = req.getParameter("RegistrationName");
+        String registrationEmail = req.getParameter("RegistrationEmail");
+        String registrationPassword = req.getParameter("RegistrationPassword");
+
+        User user1 = new User(registrationName, registrationEmail, registrationPassword);
+
+        resp.sendRedirect("/");
 
     }
 
