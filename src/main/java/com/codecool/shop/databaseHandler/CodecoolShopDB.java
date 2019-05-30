@@ -18,6 +18,7 @@ public class CodecoolShopDB {
         executeUpdateFromFile("/database/species.sql");
         executeUpdateFromFile("/database/zoo.sql");
         executeUpdateFromFile("/database/animal.sql");
+        executeUpdateFromFile("/database/users.sql");
     }
 
     public static CodecoolShopDB getInstance() {
