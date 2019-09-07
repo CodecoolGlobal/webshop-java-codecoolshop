@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestZooDao {
 
-    private static Stream daos() {
+    private static Stream getDAOs() {
         return Stream.of(
                 ZooDaoMem.getInstance(),
                 ZooDaoDB.getInstance()
@@ -22,7 +22,7 @@ public class TestZooDao {
     }
 
     @ParameterizedTest
-    @MethodSource("daos")
+    @MethodSource("getDAOs")
     void testAdd(ZooDao dao) {
         int expected = dao.getAll().size() + 1;
         Zoo newZoo = new Zoo("Sample", "Sample", "Sample", "Sample");
@@ -31,9 +31,10 @@ public class TestZooDao {
     }
 
     @ParameterizedTest
-    @MethodSource("daos")
+    @MethodSource("getDAOs")
     void testFindById(ZooDao dao) {
-        String expected = "id: 1, " +
+        String expected =
+                "id: 1, " +
                 "name: Montgomery Zoo, " +
                 "description: Montgomery Zoo is a 40-acre (16 ha) zoo " +
                 "located on the north side of Montgomery, Alabama. The zoo is an independent city family, " +
@@ -43,9 +44,10 @@ public class TestZooDao {
     }
 
     @ParameterizedTest
-    @MethodSource("daos")
+    @MethodSource("getDAOs")
     void testFindByName(ZooDao dao) {
-        String expected = "id: 1, " +
+        String expected =
+                "id: 1, " +
                 "name: Montgomery Zoo, " +
                 "description: Montgomery Zoo is a 40-acre (16 ha) zoo " +
                 "located on the north side of Montgomery, Alabama. The zoo is an independent city family, " +
@@ -55,7 +57,7 @@ public class TestZooDao {
     }
 
     @ParameterizedTest
-    @MethodSource("daos")
+    @MethodSource("getDAOs")
     void testGetAll(ZooDao dao) {
         assertEquals(13, dao.getAll().size());
     }

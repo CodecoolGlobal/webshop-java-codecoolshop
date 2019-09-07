@@ -6,7 +6,6 @@ import com.codecool.shop.dao.implementation.Mem.AnimalDaoMem;
 
 import com.codecool.shop.model.Animal;
 import com.codecool.shop.model.Species;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -16,16 +15,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestAnimalDao {
 
-    private static Stream daos() {
+    private static Stream getDAOs() {
         return Stream.of(
                 AnimalDaoMem.getInstance(),
                 AnimalDaoDB.getInstance()
         );
     }
 
-    @Disabled
     @ParameterizedTest
-    @MethodSource("daos")
+    @MethodSource("getDAOs")
     void testAdd(AnimalDao dao) {
         Animal newAnimal = new Animal(
                 "Sample",
@@ -39,11 +37,11 @@ public class TestAnimalDao {
         assertEquals(49, dao.getAll().size());
     }
 
-    @Disabled
     @ParameterizedTest
-    @MethodSource("daos")
+    @MethodSource("getDAOs")
     void testFind(AnimalDao dao) {
-        String expected = "id: 1, " +
+        String expected =
+                "id: 1, " +
                 "name: Griffon Vulture, " +
                 "defaultPrice: 1990,000000, " +
                 "defaultCurrency: USD, " +
@@ -53,7 +51,7 @@ public class TestAnimalDao {
     }
 
     @ParameterizedTest
-    @MethodSource("daos")
+    @MethodSource("getDAOs")
     void testGetAll(AnimalDao dao) {
         assertEquals(48, dao.getAll().size());
     }
