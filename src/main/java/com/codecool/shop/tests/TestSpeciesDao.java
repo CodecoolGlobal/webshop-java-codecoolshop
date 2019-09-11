@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class TestSpeciesDao {
 
-    private static Stream daos() {
+    private static Stream getDAOs() {
         return Stream.of(
                 SpeciesDaoMem.getInstance(),
                 SpeciesDaoDB.getInstance()
@@ -22,7 +22,7 @@ public class TestSpeciesDao {
     }
 
     @ParameterizedTest
-    @MethodSource("daos")
+    @MethodSource("getDAOs")
     void testAdd(SpeciesDao dao) {
         Species newSpecies = new Species("Sample", "Sample", "Sample");
         dao.add(newSpecies);
@@ -30,9 +30,10 @@ public class TestSpeciesDao {
     }
 
     @ParameterizedTest
-    @MethodSource("daos")
+    @MethodSource("getDAOs")
     void testFindById(SpeciesDao dao) {
-        String expected = "id: 1," +
+        String expected =
+                "id: 1," +
                 "name: Bird, " +
                 "family: Vertebrate, " +
                 "description: Birds (Aves) are a group of endothermic vertebrates, " +
@@ -42,9 +43,10 @@ public class TestSpeciesDao {
     }
 
     @ParameterizedTest
-    @MethodSource("daos")
+    @MethodSource("getDAOs")
     void testFindByName(SpeciesDao dao) {
-        String expected = "id: 1," +
+        String expected =
+                "id: 1," +
                 "name: Bird, " +
                 "family: Vertebrate, " +
                 "description: Birds (Aves) are a group of endothermic vertebrates, " +
@@ -54,7 +56,7 @@ public class TestSpeciesDao {
     }
 
     @ParameterizedTest
-    @MethodSource("daos")
+    @MethodSource("getDAOs")
     void testGetAll(SpeciesDao dao) {
         assertEquals(5, dao.getAll().size());
     }
