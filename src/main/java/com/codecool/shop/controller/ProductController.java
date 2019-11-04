@@ -1,10 +1,12 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.SpeciesDao;
+import com.codecool.shop.dao.AnimalDao;
+import com.codecool.shop.dao.ZooDao;
+import com.codecool.shop.dao.implementation.Main.MainDao;
+import com.codecool.shop.model.Animal;
+import com.codecool.shop.model.Order;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -14,26 +16,44 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        AnimalDao animalDataStore = MainDao.getAnimalDaoInstance();
+        SpeciesDao speciesDataStore = MainDao.getSpeciesDaoInstance();
+        ZooDao zooDataStore = MainDao.getZooDaoInstance();
 
-//        Map params = new HashMap<>();
-//        params.put("category", productCategoryDataStore.find(1));
-//        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        if (req.getParameter("id") != null){
+            int animalId = Integer.valueOf(req.getParameter("id"));
+            Order.getInstance().add(animalId);
+        }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("category", productCategoryDataStore.find(1));
-        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+
+        String filter_species = req.getParameter("species");
+        String filter_zoo = req.getParameter("zoo");
+
+        context.setVariable("species", speciesDataStore.getAll());
+        context.setVariable("zoos", zooDataStore.getAll());
+        context.setVariable("cart", Order.getInstance());
+        context.setVariable("animals", filterAnimals(filter_species, filter_zoo, animalDataStore));
         engine.process("product/index.html", context, resp.getWriter());
     }
 
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
+    }
+
+    private List<Animal> filterAnimals(String species, String zoo, AnimalDao animalDataStore) {
+        return animalDataStore.getAll().stream()
+                .filter(animal -> species == null || species.equals("") || animal.getSpecies().getId() == Integer.valueOf(species))
+                .filter(animal -> zoo == null || zoo.equals("") || animal.getZoo().getId() == Integer.valueOf(zoo))
+                .collect(Collectors.toList());
+    }
 }

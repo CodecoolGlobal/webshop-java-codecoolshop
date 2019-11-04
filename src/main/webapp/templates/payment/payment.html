@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Codecool Shop</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+
+</head>
+<body>
+<div class="container-fluid py-3">
+    <div class="row">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-4 mx-auto">
+            <div id="pay-invoice" class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h3 class="text-center">Pay Invoice</h3>
+                    </div>
+                    <hr>
+                    <article class="card">
+                    <div>
+                    <ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
+                            <i class="fa fa-credit-card"></i>Credit/Debit Card</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
+                                <i class="fa fa-paypal"></i> PayPal</a></li>
+                    </ul>
+                    <div class="tab-content">
+                    <div class="tab-pane fade show active" id="nav-tab-card">
+
+                        <div class="form-group text-center">
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><i class="text-muted fa fa-cc-visa fa-2x"></i></li>
+                                <li class="list-inline-item"><i class="fa fa-cc-mastercard fa-2x"></i></li>
+                                <li class="list-inline-item"><i class="fa fa-cc-amex fa-2x"></i></li>
+                                <li class="list-inline-item"><i class="fa fa-cc-discover fa-2x"></i></li>
+                            </ul>
+                        </div>
+                        <div class="form-group">
+                            <label for="cc-payment" class="control-label mb-1">Payment amount</label>
+                            <input id="cc-payment" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false" th:attr="value=${order.getPriceSum()}" readonly="readonly">
+                            <span class="invalid-feedback">Enter the payment amount</span>
+                        </div>
+                        <div class="form-group has-success">
+                            <label for="cc-name" class="control-label mb-1">Name on card</label>
+                            <input id="cc-name" name="cc-name" type="text" class="form-control cc-name" required autocomplete="cc-name" aria-required="true" aria-invalid="false" aria-describedby="cc-name-error" th:attr="placeholder=${order.getCustomerName()}">
+                            <span class="invalid-feedback">Enter the name as shown on credit card</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="cc-number" class="control-label mb-1">Card number</label>
+                            <input id="cc-number" name="cc-number" type="tel" class="form-control cc-number identified visa" required="" pattern="[0-9]{16}">
+                            <span class="invalid-feedback">Enter a valid 16 digit card number</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="cc-exp" class="control-label mb-1">Expiration</label>
+                                    <select class="form-control" name="expiry-month" id="expiry-month">
+                                        <option value=''>Month</option>
+                                        <option value='01'>January</option>
+                                        <option value='02'>February</option>
+                                        <option value='03'>March</option>
+                                        <option value='04'>April</option>
+                                        <option value='05'>May</option>
+                                        <option value='06'>June</option>
+                                        <option value='07'>July</option>
+                                        <option value='08'>August</option>
+                                        <option value='09'>September</option>
+                                        <option value='10'>October</option>
+                                        <option value='11'>November</option>
+                                        <option value='12'>December</option>
+                                    </select>
+                                    <select class="form-control" name="expiry-year">
+                                        <option value=''>Year</option>
+                                        <option value='10'>2010</option>
+                                        <option value='11'>2011</option>
+                                        <option value='12'>2012</option>
+                                    </select>
+                                    <input id="cc-exp" name="cc-exp" type="hidden" maxlength="4"/>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label for="x_card_code" class="control-label mb-1">Security code</label>
+                                <div class="input-group">
+                                    <input id="x_card_code" name="x_card_code" type="password" class="form-control cc-cvc" required autocomplete="off" maxlength="3">
+                                    <span class="invalid-feedback order-last">Enter the 3-digit code on back</span>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                        <span class="fa fa-question-circle fa-lg" data-toggle="popover" data-container="body" data-html="true" data-title="Security Code"
+                                              data-content="<div class='text-center one-card'>The 3 digit code on back of the card..<div class='visa-mc-cvc-preview'></div></div>"
+                                              data-trigger="hover"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <form method="post" action="/payment">
+                            <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" th:href="@{/payment}">
+                                <i class="fa fa-lock fa-lg"></i>&nbsp;
+                                <span id="payment-button-amount" th:text="'Pay' + ${order.getPriceSum()} + '$'">Pay $100.00</span>
+                                <span id="payment-button-sending" style="display:none;">Sending…</span>
+                            </button>
+                            </form>
+                        </div>
+                        </div><!-- tab-pane//-->
+                        <div class="tab-pane fade" id="nav-tab-paypal">
+                            <div id="paypal-button-container"></div>
+                            <hr>
+                            <p><strong>Note:</strong> The following link is going to redirect you to a PayPal sandbox page</p>
+                            <p><strong>Do not give any valid card details!</strong></p>
+                        </div>
+                        </div>
+                    </div>
+                    </article>
+                </div>
+            </div>
+            <div>
+                <a th:href="@{/checkout}" class="btn btn-primary btn-block">Back to the shop <i class="fa fa-angle-left"></i> </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+
+<script src="/static/js/paypal.js"></script>
+</body>
+</html>

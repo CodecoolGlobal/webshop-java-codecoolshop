@@ -23,42 +23,77 @@
     <!-- Latest compiled and minified CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <!-- End of Bootstrap components -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
+    <!-- End of Bootstrap components -->
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
 </head>
 
-<body>
-
-<div class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
-</div>
-
 <div class="container">
-    <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
+    <div class="jumbotron text-center">
+        <h1>Codecool Shop</h1>
     </div>
 
-    <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
-            <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+    <div>
+        <form method="post" action="/">
+            <div class="btn-group">
+                <select name="species" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
+                    <option selected th:value="${null}">Product Category</option>
+                    <div th:each="specie,iterStat : ${species}">
+                        <option th:value="${specie.getId()}" th:text="${specie.getName()}"></option>
+                    </div>
+                </select>
+                <select name="zoo" class="btn custom-select custom-select-lg mb-3 dropdown-toggle">
+                    <option selected th:value="${null}">Supplier</option>
+                    <div th:each="zoo,iterStat : ${zoos}">
+                        <option th:value="${zoo.getId()}" th:text="${zoo.getName()}"></option>
+                    </div>
+                </select>
+                <button class="btn btn-info mb-3" type="submit">Filter</button>
+                <a th:href="@{/shopping-cart}" class="widget-header border-none">
+                    <div class="icontext">
+                        <div class="icon-wrap icon-sm round">
+                        <span class="fa-stack fa-2x has-badge" th:attr="data-count=${cart.getNumberOfProducts()}">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                        </span>
+                        </div>
+                    </div>
+                </a>
+
+                <div>
+                    <a th:href="@{/registration}" class="btn btn-info nav-justified">Sign up</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <div id="animal" class="row">
+            <div class="col col-sm-12 col-md-6 col-lg-4" th:each="animal,iterStat : ${animals}">
+                <div class="card" style="margin-top: 10%">
+                    <div class="crop">
+                        <img src="http://placehold.it/400x250/000/fff" class="card-title" th:attr="src=${animal.imgLink}">
+                    </div>
+                </div>
                 <div class="card-header">
-                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
-                    <p class="card-text" th:text="${prod.description}">Product description... </p>
+                    <h4 class="card-title animal-name" th:text="${animal.name}">Product name</h4>
+                    <p class="card-text animal-description" th:text="${animal.description}">Product description... </p>
                 </div>
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                        <p class="lead" th:text="${animal.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <form action="/shopping-cart" method="post">
+                            <button class="btn btn-success" name="id" th:value="${animal.getId()}" type="submit">Add to Cart</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    </div>
 </div>
 
 <div th:replace="footer.html :: copy"></div>
