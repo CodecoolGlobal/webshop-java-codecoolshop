@@ -15,3 +15,5 @@ Set environmental variables according to lines 12-13 of CodecoolShopDB.java
 Run server with command mvn jetty:run
 
 Run tests as JUnit5 tests (also add JUnit5 to classpath)
+
+And most importantly - have fun! :)
